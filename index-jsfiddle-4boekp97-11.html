@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>JSFiddle 4boekp97</title>
+
+      <style>
+        #score {
+          text-align: center;
+        }
+
+        #game {
+          width: 600px;
+          height: 300px;
+          border: 2px solid black;
+          margin: auto;
+          background-image: url("https://img.freepik.com/vektoren-kostenlos/berglandschaft-mit-farbverlauf_23-2149162009.jpg");
+          background-size: cover;
+        }
+
+        #adler {
+          height: 75px;
+          width: 75px;
+          top: 225px;
+          position: relative;
+          background-image: url("https://static.vecteezy.com/system/resources/thumbnails/070/257/013/small/majestic-bald-eagle-soaring-powerfully-with-wings-spread-wide-symbol-of-freedom-and-strength-png.png");
+          background-size: cover;
+        }
+
+        #rock {
+          width: 50px;
+          height: 50px;
+          position: relative;
+          top: 175px;
+          left: 550px;
+          background-image: url("https://raw.githubusercontent.com/kriscfoster/chrome-dino-game/refs/heads/master/rock.png");
+          background-size: cover;
+          animation: rock 1.33s infinite;
+        }
+
+        @keyframes rock {
+          0% {
+            left: 550px;
+          }
+          100% {
+            left: -50px;
+          }
+        }
+
+        .jump-animation {
+          animation: jump 1s;
+        }
+
+        @keyframes jump {
+          0% {
+            top: 225px;
+          }
+          50% {
+            top: 75px;
+          }
+          75% {
+            top: 75px;
+          }
+          100% {
+            top: 225px;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>adler Game</title>
+          <link rel="stylesheet" href="style.css" />
+        </head>
+        <body>
+          <div id="game">
+            <div id="adler"></div>
+            <div id="rock"></div>
+          </div>
+          <h1 id="score">0</h1>
+          <script src="script.js"></script>
+        </body>
+      </html>
+
+      <script>
+        const adler = document.getElementById("adler");
+        const rock = document.getElementById("rock");
+        const score = document.getElementById("score");
+
+        function jump() {
+          adler.classList.add("jump-animation");
+          setTimeout(() => adler.classList.remove("jump-animation"), 500);
+        }
+
+        document.addEventListener("keypress", (event) => {
+          if (!adler.classList.contains("jump-animation")) {
+            jump();
+          }
+        });
+
+        setInterval(() => {
+          const adlerTop = parseInt(
+            window.getComputedStyle(adler).getPropertyValue("top"),
+          );
+          const rockLeft = parseInt(
+            window.getComputedStyle(rock).getPropertyValue("left"),
+          );
+          score.innerText = parseInt(score.innerText) + 2;
+
+          if (rockLeft < 0) {
+            rock.style.display = "none";
+          } else {
+            rock.style.display = "";
+          }
+
+          if (rockLeft < 50 && rockLeft > 0 && adlerTop > 150) {
+            alert("You got a score of: " + score.innerText + "\n\nPlay again?");
+            location.reload();
+          }
+        }, 50);
+      </script>
+    </body>
+  </html>
+</html>
